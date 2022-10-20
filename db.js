@@ -1,7 +1,22 @@
 const mysql = require("mysql2");
 
-const conn = mysql.createConnection({
-    // Completar con los datos de la conexión
+const PoolCon = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "spoticfy.sql"
 });
 
-module.exports = conn;
+const QueryIn = (string, params) => {
+    return new Promise((resolve, reject) => {
+        PoolCon.query(string, params, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+
+module.exports = PoolCon;
