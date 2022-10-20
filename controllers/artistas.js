@@ -126,7 +126,15 @@ const getAlbumesByArtista = (req, res) => {
 
 const getCancionesByArtista = (req, res) => {
     const id_artista = req.params.id;
-    connection.query("SELECT nombre FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
+    connection.query("SELECT id FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+        id_album = res.json(rows)
+    });
+
+    connection.query("SELECT nombre FROM canciones WHERE album = ?", [id_album], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return;
