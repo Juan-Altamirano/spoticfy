@@ -114,7 +114,7 @@ const getAlbumesByArtista = (req, res) => {
     connection.query("SELECT nombre FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return err;
         }
         return res.json(rows);
     });
@@ -126,18 +126,18 @@ const getAlbumesByArtista = (req, res) => {
 
 const getCancionesByArtista = (req, res) => {
     const id_artista = req.params.id;
-    connection.query("SELECT id FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
+    var id_album = connection.query("SELECT id FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return err;
         }
-        id_album = res.json(rows)
+        res.json(rows);
     });
 
     connection.query("SELECT nombre FROM canciones WHERE album = ?", [id_album], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return err;
         }
         return res.json(rows);
     });
@@ -157,6 +157,8 @@ module.exports = {
     getAlbumesByArtista,
     getCancionesByArtista,
 };
+
+// Ignora esto, lo hice al principio y no lo borre
 
 const QueryIn = (string, params) => {
     return new Promise((resolve, reject) => {
