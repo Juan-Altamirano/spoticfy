@@ -1,6 +1,14 @@
 const conn = require("../db");
 
-const getArtistas = (_, res) => {
+const getArtistas = (req, res) => {
+    connection.query("SELECT * FROM artistas", (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+        return res.json(rows);
+    });
+    
     // Completar con la consulta que devuelve todos los artistas
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
     // Deberían devolver los datos de la siguiente forma:
@@ -20,6 +28,15 @@ const getArtistas = (_, res) => {
 };
 
 const getArtista = (req, res) => {
+    
+    const id = req.params.id;
+    connection.query("SELECT nombre FROM artistas WHERE id = ?", [id], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+        return res.json(rows);
+    });
     // Completar con la consulta que devuelve un artista
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
     // Deberían devolver los datos de la siguiente forma:
@@ -32,6 +49,13 @@ const getArtista = (req, res) => {
 };
 
 const createArtista = (req, res) => {
+    connection.query("INSERT INTO artistas (nombre) VALUES (?)", [req.body.nombre], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+        return res.json(rows);        
+    });
     // Completar con la consulta que crea un artista
     // Recordar que los parámetros de una consulta POST se encuentran en req.body
     // Deberían recibir los datos de la siguiente forma:
@@ -64,7 +88,9 @@ const getAlbumesByArtista = (req, res) => {
     // Deberían devolver los datos de la misma forma que getAlbumes
 };
 
-const getCanionesByArtista = (req, res) => {
+const getCancionesByArtista = (req, res) => {
+
+
     // Completar con la consulta que devuelve las canciones de un artista
     // (tener en cuenta que las canciones están asociadas a un álbum, y los álbumes a un artista)
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
@@ -78,5 +104,17 @@ module.exports = {
     updateArtista,
     deleteArtista,
     getAlbumesByArtista,
-    getCanionesByArtista,
+    getCancionesByArtista,
 };
+
+const QueryIn = (string, params) => {
+    return new Promise((resolve, reject) => {
+        PoolCon.query(string, params, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
