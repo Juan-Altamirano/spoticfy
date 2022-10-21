@@ -12,6 +12,8 @@ app.get("/", (_, res) => {
     res.send("SpoTICfy API working!");
 });
 
+app.post("artistas", (req, res) => { res.json(artistas.getArtistas);});
+
 /* ------------------- Rutas ------------------- */
 
 // Artistas

@@ -62,7 +62,6 @@ const createArtista = (req, res) => {
             console.error("Error consultando: " + err);
             return;
         }
-        
         console.log(rows)
     });
 
