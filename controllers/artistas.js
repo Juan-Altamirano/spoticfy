@@ -30,7 +30,7 @@ const getArtistas = (req, res) => {
 const getArtista = (req, res) => {
     
     const id = req.params.id;
-    connection.query("SELECT nombre FROM artistas WHERE id = ?", [id], (err, rows) => {
+    connection.query("SELECT * FROM artistas WHERE id = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return;
@@ -50,11 +50,13 @@ const getArtista = (req, res) => {
 };
 
 const createArtista = (req, res) => {
-    connection.query("INSERT INTO artistas (nombre) VALUES (?)", [req.body.nombre], (err, rows) => {
+    const nombre = req.body.nombre;
+    connection.query("INSERT INTO artistas (nombre) VALUES (?)", [nombre], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return;
-        }        
+        }
+        res.send(`Artista <${nombre}> creado correctamente`);        
     });
 
     connection.query("SELECT * FROM artistas", (err, rows) => {
@@ -110,7 +112,7 @@ const deleteArtista = (req, res) => {
 
 const getAlbumesByArtista = (req, res) => {
     const id_artista = req.params.id;
-    connection.query("SELECT nombre FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
+    connection.query("SELECT * FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return err;
@@ -133,7 +135,7 @@ const getCancionesByArtista = (req, res) => {
         res.json(rows);
     });
 
-    connection.query("SELECT nombre FROM canciones WHERE album = ?", [id_album], (err, rows) => {
+    connection.query("SELECT * FROM canciones WHERE album = ?", [id_album], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return err;

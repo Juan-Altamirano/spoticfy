@@ -12,8 +12,6 @@ app.get("/", (_, res) => {
     res.send("SpoTICfy API working!");
 });
 
-app.post("artistas", (req, res) => { res.json(artistas.getArtistas);});
-
 /* ------------------- Rutas ------------------- */
 
 // Artistas
@@ -21,7 +19,15 @@ app.post("artistas", (req, res) => { res.json(artistas.getArtistas);});
 // Para acceder a cada funcion de artistas, se debe hacer de la siguiente forma:
 // artistas.getArtistas;
 // artistas.getArtista;
-// ...
+
+app.get("/artistas", (req, res) => { res.json(artistas.getArtistas);});
+app.get("/artistas/:id", (req, res) => { res.json(artistas.getArtista);});
+app.post("/artistas", (req, res) => { res.json(artistas.createArtista);});
+app.put("/artistas/:id", (req, res) => { res.json(artistas.updateArtista);});
+app.del("/artistas/:id", (req, res) => { res.json(artistas.deleteArtista);});
+app.get("/artistas/:id/albumes", (req, res) => { res.json(artistas.getAlbumesByArtista);});
+app.get("/artistas/:id/canciones", (req, res) => { res.json(artistas.getCancionesByArtista);});
+
 
 // Albumes
 // Completar con las rutas de albumes
