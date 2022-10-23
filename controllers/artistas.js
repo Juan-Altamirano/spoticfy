@@ -1,4 +1,4 @@
-const conn = require("../db");
+const connection = require("../db");
 
 const getArtistas = (req, res) => {
     connection.query("SELECT * FROM artistas", (err, rows) => {

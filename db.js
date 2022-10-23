@@ -1,13 +1,13 @@
 const mysql = require("mysql2");
 
-const con = mysql.createConnection({
+const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "rootroot",
     database: "spoticfy.sql"
 });
 
-con.connect((err) => {
+connection.connect((err) => {
     if (err) {
         console.log("Error connecting to Db");
         return;
@@ -15,4 +15,4 @@ con.connect((err) => {
     console.log("Connection established");
 });
 
-module.exports = con, QueryIn;
+module.exports = connection, QueryIn;

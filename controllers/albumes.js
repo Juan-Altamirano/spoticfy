@@ -1,4 +1,4 @@
-const conn = require("../db");
+const connection = require("../db");
 
 const getAlbumes = (_, res) => {
     connection.query("SELECT * FROM albumes", (err, rows) => {
@@ -52,13 +52,16 @@ const getAlbum = (req, res) => {
 };
 
 const createAlbum = (req, res) => {
+
     const nombre = req.body.nombre;
-    connection.query("INSERT INTO albumes (nombre) VALUES (?)", [nombre], (err, rows) => {
+    const artista = req.body.artista;
+
+    connection.query("INSERT INTO albumes (nombre, artista) VALUES (?)", [nombre, artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return;
         }
-        res.send(`Album <${nombre}> creado correctamente`);        
+        res.send(`Album <${nombre}> del artista <${artista}> creado correctamente`);        
     });
 
     connection.query("SELECT * FROM albumes", (err, rows) => {
@@ -81,9 +84,12 @@ const createAlbum = (req, res) => {
 };
 
 const updateAlbum = (req, res) => {
+
     const id = req.params.id;
     const nombre = req.body.nombre;
-    connection.query("UPDATE albumes set nombre = '?' WHERE id = ?", [nombre, id], (err, rows) => {
+    const artista = req.body.artista;
+
+    connection.query("UPDATE albumes set nombre = '?', set artista = '?' WHERE id = ?", [nombre, artista, id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return;

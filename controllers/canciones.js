@@ -1,6 +1,15 @@
-const conn = require("../db");
+const connection = require("../db");
 
 const getCanciones = (_, res) => {
+
+    connection.query("SELECT * FROM canciones", (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+        return res.json(rows);
+    });
+
     // Completar con la consulta que devuelve todas las canciones
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
     // Deberían devolver los datos de la siguiente forma:
@@ -28,6 +37,16 @@ const getCanciones = (_, res) => {
 };
 
 const getCancion = (req, res) => {
+
+    const id = req.params.id;
+    connection.query("SELECT * FROM canciones WHERE id = ?", [id], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+        return res.json(rows);
+    });
+
     // Completar con la consulta que devuelve una canción
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
     // Deberían devolver los datos de la siguiente forma:
@@ -44,6 +63,27 @@ const getCancion = (req, res) => {
 };
 
 const createCancion = (req, res) => {
+
+    const nombre = req.body.nombre;
+    const album = req.body.album;
+    const duracion = req.body.duracion;
+
+    connection.query("INSERT INTO canciones (nombre, album, duracion) VALUES (?)", [nombre, album, duracion], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+        res.send(`Cancion <${nombre}> del album <${album}> y de duracion <${duracion}> fue creada correctamente`);        
+    });
+
+    connection.query("SELECT * FROM canciones", (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+        console.log(rows)
+    });
+
     // Completar con la consulta que crea una canción
     // Recordar que los parámetros de una consulta POST se encuentran en req.body
     // Deberían recibir los datos de la siguiente forma:
@@ -59,6 +99,19 @@ const createCancion = (req, res) => {
 };
 
 const updateCancion = (req, res) => {
+
+    const id = req.params.id;
+    const nombre = req.body.nombre;
+    const album = req.body.album;
+    const duracion = req.body.duracion;
+
+    connection.query("UPDATE canciones set nombre = '?', set album = '?', set duracion = '?' WHERE id = ?", [nombre, album, duracion, id], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }
+    });
+
     // Completar con la consulta que actualiza una canción
     // Recordar que los parámetros de una consulta PUT se encuentran en req.body
     // Deberían recibir los datos de la siguiente forma:
@@ -74,11 +127,41 @@ const updateCancion = (req, res) => {
 };
 
 const deleteCancion = (req, res) => {
+
+    const id = req.params.id;
+    connection.query("DELETE FROM canciones WHERE id = ?", [id], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return;
+        }        
+    });
+
     // Completar con la consulta que elimina una canción
     // Recordar que los parámetros de una consulta DELETE se encuentran en req.params
 };
 
 const reproducirCancion = (req, res) => {
+
+    const id_cancion = req.params.id;
+
+    var reproducciones = connection.query("SELECT reproducciones FROM canciones WHERE id = ?", [id_cancion], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return err;
+        }
+        res.json(rows);
+    });
+
+    reproducciones += 1
+
+    connection.query("UPDATE canciones set reproducciones = '?' WHERE id = ?", [reproducciones, id_cancion], (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return err;
+        }
+        return res.json(rows);
+    });
+
     // Completar con la consulta que aumenta las reproducciones de una canción
     // En este caso es una consulta PUT, pero no recibe ningún parámetro en el body, solo en los params
 };
