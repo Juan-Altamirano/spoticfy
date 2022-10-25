@@ -49,7 +49,7 @@ const getCancion = (req, res) => {
 
     // Completar con la consulta que devuelve una canción
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
-    // Deberían devolver los datos de la siguiente forma:
+    // Se deberían devolver los datos de la siguiente forma:
     /*
         {
             "id": "Id de la canción",
