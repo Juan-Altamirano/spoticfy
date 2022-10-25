@@ -73,7 +73,7 @@ const createCancion = (req, res) => {
             console.error("Error consultando: " + err);
             return;
         }
-        res.send(`Cancion <${nombre}> del album <${album}> y de duracion <${duracion}> fue creada correctamente`);        
+        res.send(`Cancion <${nombre}> del album <${album}> y de duracion <${duracion}> fue creada correctamente`);
     });
 
     connection.query("SELECT * FROM canciones", (err, rows) => {
@@ -133,7 +133,7 @@ const deleteCancion = (req, res) => {
         if (err) {
             console.error("Error consultando: " + err);
             return;
-        }        
+        }
     });
 
     // Completar con la consulta que elimina una canción
