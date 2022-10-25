@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "rootroot",
-    database: "spoticfy.sql"
+    database: "spoticfy"
 });
 
 connection.connect((err) => {
@@ -15,4 +15,4 @@ connection.connect((err) => {
     console.log("Connection established");
 });
 
-module.exports = connection, QueryIn;
+module.exports = connection;

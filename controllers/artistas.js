@@ -56,7 +56,7 @@ const createArtista = (req, res) => {
             console.error("Error consultando: " + err);
             return;
         }
-        res.send(`Artista <${nombre}> creado correctamente`);        
+        console.log(`Artista <${nombre}> creado correctamente`);        
     });
 
     connection.query("SELECT * FROM artistas", (err, rows) => {
@@ -80,11 +80,13 @@ const createArtista = (req, res) => {
 const updateArtista = (req, res) => {
     const id = req.params.id;
     const nombre = req.body.nombre;
-    connection.query("UPDATE artistas set nombre = '?' WHERE id = ?", [nombre, id], (err, rows) => {
+    connection.query('UPDATE artistas SET nombre = ? WHERE id = ?', [nombre, id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return;
         }
+        console.log(`Artista <${nombre}> actualizado correctamente`);
+        return;
     });
 
     // Completar con la consulta que actualiza un artista
@@ -161,14 +163,14 @@ module.exports = {
 
 // Ignora esto, lo hice al principio y no lo borre
 
-const QueryIn = (string, params) => {
-    return new Promise((resolve, reject) => {
-        PoolCon.query(string, params, (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
-        });
-    });
-}
+// const QueryIn = (string, params) => {
+//     return new Promise((resolve, reject) => {
+//         PoolCon.query(string, params, (err, result) => {
+//             if (err) {
+//                 reject(err);
+//             } else {
+//                 resolve(result);
+//             }
+//         });
+//     });
+// }

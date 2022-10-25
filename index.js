@@ -20,33 +20,20 @@ app.get("/", (_, res) => {
 // artistas.getArtistas;
 // artistas.getArtista;
 
-app.get("/artistas", (req, res) => { 
-    res.json(artistas.getArtistas);
-});
+app.get("/artistas", artistas.getArtistas);
 
-app.get("/artistas/:id", (req, res) => { 
-    res.json(artistas.getArtista);
-});
+app.get("/artistas/:id", artistas.getArtista);
 
-app.post("/artistas", (req, res) => { 
-    res.json(artistas.createArtista);
-});
+app.post("/artistas", artistas.createArtista);
 
-app.put("/artistas/:id", (req, res) => { 
-    res.json(artistas.updateArtista);
-});
+app.put("/artistas/:id", artistas.updateArtista);
 
-app.del("/artistas/:id", (req, res) => { 
-    res.json(artistas.deleteArtista);
-});
+app.delete("/artistas/:id", artistas.deleteArtista);
 
-app.get("/artistas/:id/albumes", (req, res) => { 
-    res.json(artistas.getAlbumesByArtista);
-});
+app.get("/artistas/:id/albumes", artistas.getAlbumesByArtista);
 
-app.get("/artistas/:id/canciones", (req, res) => { 
-    res.json(artistas.getCancionesByArtista);
-});
+app.get("/artistas/:id/canciones", artistas.getCancionesByArtista);
+
 
 
 // Albumes
@@ -55,29 +42,17 @@ app.get("/artistas/:id/canciones", (req, res) => {
 // albumes.getAlbumes;
 // albumes.getAlbum;
 
-app.get("/albumes", (req, res) => { 
-    res.json(albumes.getAlbumes);
-});
+app.get("/albumes", albumes.getAlbumes);
 
-app.get("/albumes/:id", (req, res) => { 
-    res.json(albumes.getAlbum);
-});
+app.get("/albumes/:id", albumes.getAlbum);
 
-app.post("/albumes", (req, res) => { 
-    res.json(albumes.createAlbum);
-});
+app.post("/albumes", albumes.createAlbum);
 
-app.put("/albumes/:id", (req, res) => { 
-    res.json(albumes.updateAlbum);
-});
+app.put("/albumes/:id", albumes.updateAlbum);
 
-app.del("/albumes/:id", (req, res) => { 
-    res.json(albumes.deleteAlbum);
-});
+app.delete("/albumes/:id", albumes.deleteAlbum);
 
-app.get("/albumes/:id/canciones", (req, res) => { 
-    res.json(albumes.getCancionesByAlbum);
-});
+app.get("/albumes/:id/canciones", albumes.getCancionesByAlbum);
 
 // Canciones
 // Completar con las rutas de canciones
@@ -85,29 +60,17 @@ app.get("/albumes/:id/canciones", (req, res) => {
 // canciones.getCanciones;
 // canciones.getCancion;
 
-app.get("/canciones", (req, res) => { 
-    res.json(canciones.getCanciones);
-});
+app.get("/canciones", canciones.getCanciones);
 
-app.get("/canciones/:id", (req, res) => { 
-    res.json(canciones.getCancion);
-});
+app.get("/canciones/:id", canciones.getCancion);
 
-app.post("/canciones", (req, res) => { 
-    res.json(canciones.createCancion);
-});
+app.post("/canciones", canciones.createCancion);
 
-app.put("/canciones/:id", (req, res) => { 
-    res.json(canciones.updateCancion);
-});
+app.put("/canciones/:id", canciones.updateCancion);
 
-app.del("/canciones/:id", (req, res) => { 
-    res.json(canciones.deleteCancion);
-});
+app.delete("/canciones/:id", canciones.deleteCancion);
 
-app.put("/canciones/:id/reproducir", (req, res) => { 
-    res.json(canciones.reproducirCancion);
-});
+app.put("/canciones/:id/reproducir", canciones.reproducirCancion);
 
 app.listen(port, () => {
     console.log(`SpoTICfy API listening at http://localhost:${port}`);
