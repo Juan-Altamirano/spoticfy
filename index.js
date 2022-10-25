@@ -20,13 +20,32 @@ app.get("/", (_, res) => {
 // artistas.getArtistas;
 // artistas.getArtista;
 
-app.get("/artistas", (req, res) => { res.json(artistas.getArtistas);});
-app.get("/artistas/:id", (req, res) => { res.json(artistas.getArtista);});
-app.post("/artistas", (req, res) => { res.json(artistas.createArtista);});
-app.put("/artistas/:id", (req, res) => { res.json(artistas.updateArtista);});
-app.del("/artistas/:id", (req, res) => { res.json(artistas.deleteArtista);});
-app.get("/artistas/:id/albumes", (req, res) => { res.json(artistas.getAlbumesByArtista);});
-app.get("/artistas/:id/canciones", (req, res) => { res.json(artistas.getCancionesByArtista);});
+app.get("/artistas", (req, res) => { 
+    res.json(artistas.getArtistas);
+});
+
+app.get("/artistas/:id", (req, res) => { 
+    res.json(artistas.getArtista);
+});
+
+app.post("/artistas", (req, res) => { 
+    res.json(artistas.createArtista);
+});
+
+app.put("/artistas/:id", (req, res) => { 
+    res.json(artistas.updateArtista);
+});
+
+app.del("/artistas/:id", (req, res) => { 
+    res.json(artistas.deleteArtista);
+});
+
+app.get("/artistas/:id/albumes", (req, res) => { 
+    res.json(artistas.getAlbumesByArtista);
+});
+app.get("/artistas/:id/canciones", (req, res) => { 
+    res.json(artistas.getCancionesByArtista);
+});
 
 
 // Albumes
