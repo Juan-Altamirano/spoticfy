@@ -5,7 +5,7 @@ const getCanciones = (_, res) => {
     connection.query("SELECT * FROM canciones", (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
         return res.json(rows);
     });
@@ -42,7 +42,7 @@ const getCancion = (req, res) => {
     connection.query("SELECT * FROM canciones WHERE id = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
         return res.json(rows);
     });
@@ -71,15 +71,15 @@ const createCancion = (req, res) => {
     connection.query("INSERT INTO canciones (nombre, album, duracion) VALUES (?)", [nombre, album, duracion], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
-        res.send(`Cancion <${nombre}> del album <${album}> y de duracion <${duracion}> fue creada correctamente`);
+        res.json(`Cancion <${nombre}> del album <${album}> y de duracion <${duracion}> fue creada correctamente`);
     });
 
     connection.query("SELECT * FROM canciones", (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
         console.log(rows)
     });
@@ -108,8 +108,9 @@ const updateCancion = (req, res) => {
     connection.query("UPDATE canciones set nombre = '?', set album = '?', set duracion = '?' WHERE id = ?", [nombre, album, duracion, id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
+        res.json(`Cancion <${nombre}> del album <${album}> y de duracion <${duracion}> cuyo id es <${id}> fue actualizada correctamente`);
     });
 
     // Completar con la consulta que actualiza una canción
@@ -132,8 +133,9 @@ const deleteCancion = (req, res) => {
     connection.query("DELETE FROM canciones WHERE id = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
+        res.json(`Cancion cuyo id es <${id}> fue borrada correctamente`);
     });
 
     // Completar con la consulta que elimina una canción
@@ -147,7 +149,7 @@ const reproducirCancion = (req, res) => {
     var reproducciones = connection.query("SELECT reproducciones FROM canciones WHERE id = ?", [id_cancion], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return err;
+            return res.sendStatus(500);
         }
         res.json(rows);
     });
@@ -157,7 +159,7 @@ const reproducirCancion = (req, res) => {
     connection.query("UPDATE canciones set reproducciones = '?' WHERE id = ?", [reproducciones, id_cancion], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return err;
+            return res.sendStatus(500);
         }
         return res.json(rows);
     });

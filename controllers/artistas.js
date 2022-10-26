@@ -4,7 +4,7 @@ const getArtistas = (req, res) => {
     connection.query("SELECT * FROM artistas", (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
         return res.json(rows);
     });
@@ -33,7 +33,7 @@ const getArtista = (req, res) => {
     connection.query("SELECT * FROM artistas WHERE id = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
         return res.json(rows);
     });
@@ -54,15 +54,15 @@ const createArtista = (req, res) => {
     connection.query("INSERT INTO artistas (nombre) VALUES (?)", [nombre], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
-        console.log(`Artista <${nombre}> creado correctamente`);        
+        return res.json(`Artista <${nombre}> creado correctamente`);        
     });
 
     connection.query("SELECT * FROM artistas", (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
         console.log(rows)
     });
@@ -83,10 +83,9 @@ const updateArtista = (req, res) => {
     connection.query('UPDATE artistas SET nombre = ? WHERE id = ?', [nombre, id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
+            return res.sendStatus(500);
         }
-        console.log(`Artista <${nombre}> actualizado correctamente`);
-        return;
+        return res.json(`Artista <${nombre}> actualizado correctamente`);
     });
 
     // Completar con la consulta que actualiza un artista
@@ -104,8 +103,9 @@ const deleteArtista = (req, res) => {
     connection.query("DELETE FROM artistas WHERE id = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return;
-        }        
+            return res.sendStatus(500);
+        }
+        return res.json(`Artista <${id}> borrado correctamente`);        
     });
 
     // Completar con la consulta que elimina un artista
@@ -117,7 +117,7 @@ const getAlbumesByArtista = (req, res) => {
     connection.query("SELECT * FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return err;
+            return res.sendStatus(500);
         }
         return res.json(rows);
     });
@@ -132,15 +132,15 @@ const getCancionesByArtista = (req, res) => {
     var id_album = connection.query("SELECT id FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return err;
+            return res.sendStatus(500);
         }
-        res.json(rows);
+        return res.json(rows);
     });
 
     connection.query("SELECT * FROM canciones WHERE album = ?", [id_album], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
-            return err;
+            return res.sendStatus(500);
         }
         return res.json(rows);
     });
