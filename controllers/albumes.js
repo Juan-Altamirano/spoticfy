@@ -56,7 +56,7 @@ const createAlbum = (req, res) => {
     const nombre = req.body.nombre;
     const artista = req.body.artista;
 
-    connection.query("INSERT INTO albumes (nombre, artista) VALUES (?)", [nombre, artista], (err, rows) => {
+    connection.query("INSERT INTO albumes (nombre, artista) VALUES (?, ?)", [nombre, artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
@@ -89,12 +89,12 @@ const updateAlbum = (req, res) => {
     const nombre = req.body.nombre;
     const artista = req.body.artista;
 
-    connection.query("UPDATE albumes set nombre = '?', set artista = '?' WHERE id = ?", [nombre, artista, id], (err, rows) => {
+    connection.query("UPDATE albumes SET nombre = ?, artista = ? WHERE id = ?", [nombre, artista, id], (err, _) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        return res.json(`Album <${nombre}> del artista <${artista}> cuyo id es <${id}> fue actualizado correctamente`);
+        return res.send(`Album <${nombre}> del artista <${artista}> cuyo id es <${id}> fue actualizado correctamente`);
     });
 
     connection.query("SELECT * FROM albumes", (err, rows) => {
@@ -102,7 +102,7 @@ const updateAlbum = (req, res) => {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        console.log(rows)
+        console.log(rows);
     });
 
     // Completar con la consulta que actualiza un album

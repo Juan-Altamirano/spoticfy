@@ -68,7 +68,7 @@ const createCancion = (req, res) => {
     const album = req.body.album;
     const duracion = req.body.duracion;
 
-    connection.query("INSERT INTO canciones (nombre, album, duracion) VALUES (?)", [nombre, album, duracion], (err, rows) => {
+    connection.query("INSERT INTO canciones (nombre, album, duracion) VALUES (?, ?, ?)", [nombre, album, duracion], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
@@ -105,7 +105,7 @@ const updateCancion = (req, res) => {
     const album = req.body.album;
     const duracion = req.body.duracion;
 
-    connection.query("UPDATE canciones set nombre = '?', set album = '?', set duracion = '?' WHERE id = ?", [nombre, album, duracion, id], (err, rows) => {
+    connection.query("UPDATE canciones SET nombre = ?, album = ?, duracion = ? WHERE id = ?", [nombre, album, duracion, id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
@@ -145,23 +145,12 @@ const deleteCancion = (req, res) => {
 const reproducirCancion = (req, res) => {
 
     const id_cancion = req.params.id;
-
-    var reproducciones = connection.query("SELECT reproducciones FROM canciones WHERE id = ?", [id_cancion], (err, rows) => {
+    connection.query("UPDATE canciones set reproducciones = reproducciones + 1 WHERE id = ?", [id_cancion], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        res.json(rows);
-    });
-
-    reproducciones += 1
-
-    connection.query("UPDATE canciones set reproducciones = '?' WHERE id = ?", [reproducciones, id_cancion], (err, rows) => {
-        if (err) {
-            console.error("Error consultando: " + err);
-            return res.sendStatus(500);
-        }
-        return res.json(rows);
+        res.json(`Cancion cuyo id es <${id_cancion}> fue reproducida correctamente`);
     });
 
     // Completar con la consulta que aumenta las reproducciones de una canción
