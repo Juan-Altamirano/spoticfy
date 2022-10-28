@@ -147,8 +147,8 @@ const getAlbumesByArtista = (req, res) => {
 const getCancionesByArtista = (req, res) => {
 
     let id = req.params.id;
-    // connection.query("SELECT canciones.nombre, albumes.artista FROM canciones INNER JOIN albumes ON albumes.artista = ?", [id], (err, rows) => {
-    connection.query("Select canciones.nombre WHERE canciones.album = albumes.artista AND albumes.artista = ?", [id], (err, rows) => {
+    connection.query("SELECT canciones.nombre, albumes.artista FROM canciones INNER JOIN albumes ON canciones.album = albumes.artista INNER JOIN artistas ON albumes.artista = ?", [id], (err, rows) => {
+    // connection.query("Select canciones.nombre WHERE canciones.album = albumes.artista AND albumes.artista = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
