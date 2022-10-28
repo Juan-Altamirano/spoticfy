@@ -128,23 +128,7 @@ const getAlbumesByArtista = (req, res) => {
 };
 
 const getCancionesByArtista = (req, res) => {
-    const id_artista = req.params.id;
-    var id_album = connection.query("SELECT id FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
-        if (err) {
-            console.error("Error consultando: " + err);
-            return res.sendStatus(500);
-        }
-        return res.json(rows);
-    });
-
-    connection.query("SELECT * FROM canciones WHERE album = ?", [id_album], (err, rows) => {
-        if (err) {
-            console.error("Error consultando: " + err);
-            return res.sendStatus(500);
-        }
-        return res.json(rows);
-    });
-
+    connection.query("Select canciones.album, albumes.artista FROM canciones INNER JOIN albumes ON canciones.album = albumes.id")
     // Completar con la consulta que devuelve las canciones de un artista
     // (tener en cuenta que las canciones están asociadas a un álbum, y los álbumes a un artista)
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
