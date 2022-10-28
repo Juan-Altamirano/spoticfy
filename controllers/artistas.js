@@ -88,6 +88,15 @@ const updateArtista = (req, res) => {
         return res.json(`Artista <${nombre}> actualizado correctamente`);
     });
 
+    connection.query("SELECT * FROM artistas", (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return res.sendStatus(500);
+        }
+        console.log(rows)
+    });
+
+
     // Completar con la consulta que actualiza un artista
     // Recordar que en este caso tienen parámetros en req.params (el id) y en req.body (los demás datos)
     // Deberían recibir los datos de la siguiente forma:
@@ -106,6 +115,14 @@ const deleteArtista = (req, res) => {
             return res.sendStatus(500);
         }
         return res.json(`Artista <${id}> borrado correctamente`);        
+    });
+
+    connection.query("SELECT * FROM artistas", (err, rows) => {
+        if (err) {
+            console.error("Error consultando: " + err);
+            return res.sendStatus(500);
+        }
+        console.log(rows)
     });
 
     // Completar con la consulta que elimina un artista
@@ -130,7 +147,8 @@ const getAlbumesByArtista = (req, res) => {
 const getCancionesByArtista = (req, res) => {
 
     let id = req.params.id;
-    connection.query("Select canciones.nombre, albumes.artista FROM canciones INNER JOIN albumes ON albumes.artista = ?", [id], (err, rows) => {
+    // connection.query("SELECT canciones.nombre, albumes.artista FROM canciones INNER JOIN albumes ON albumes.artista = ?", [id], (err, rows) => {
+    connection.query("Select canciones.nombre WHERE canciones.album = albumes.artista AND albumes.artista = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
