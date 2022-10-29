@@ -37,6 +37,7 @@ const getArtista = (req, res) => {
         }
         return res.json(rows);
     });
+    
 
     // Completar con la consulta que devuelve un artista
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
@@ -144,10 +145,14 @@ const getAlbumesByArtista = (req, res) => {
     // Deberían devolver los datos de la misma forma que getAlbumes
 };
 
+// Seleccionas tanto el nombre de las canciones, como el id del artista de la tabla canciones. 
+// Como recibimos como parametro el id del artista (ubicado en la tabla de artista) y necesitamos seleccionar el nombre de las canciones de dichos artistas, necesitaremos JOINS, para poder juntar toda la informacion en una tabla temporal.
+//
+
 const getCancionesByArtista = (req, res) => {
 
     let id = req.params.id;
-    connection.query("SELECT canciones.nombre, albumes.artista FROM canciones INNER JOIN albumes ON canciones.album = albumes.artista INNER JOIN artistas ON albumes.artista = ?", [id], (err, rows) => {
+    connection.query("SELECT canciones.id, canciones.nombre, artista.nombre AS nombre_artista, albumes.nombre AS nombre_album, canciones.duracion, canciones.reproducciones FROM canciones INNER JOIN albumes ON albumes.id = canciones.album INNER JOIN artistas ON artistas.id = albumes.artista WHERE artista.id = ?", [id], (err, rows) => {
     // connection.query("Select canciones.nombre WHERE canciones.album = albumes.artista AND albumes.artista = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);

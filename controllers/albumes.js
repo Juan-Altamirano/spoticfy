@@ -1,7 +1,7 @@
 const connection = require("../db");
 
 const getAlbumes = (_, res) => {
-    connection.query("SELECT * FROM albumes", (err, rows) => {
+    connection.query("SELECT albumes.id, albumes.nombre, artistas.nombre AS nombre_artista FROM albumes INNER JOIN artistas ON artistas.id = albumes.id", (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
@@ -31,7 +31,7 @@ const getAlbumes = (_, res) => {
 
 const getAlbum = (req, res) => {
     const id = req.params.id;
-    connection.query("SELECT * FROM albumes WHERE id = ?", [id], (err, rows) => {
+    connection.query("SELECT albumes.id, albumes.nombre, artistas.nombre AS nombre_artista FROM albumes INNER JOIN artistas ON artistas.id = albumes.id WHERE albumes.id = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
@@ -132,7 +132,7 @@ const deleteAlbum = (req, res) => {
 
 const getCancionesByAlbum = (req, res) => {
     const id_album = req.params.id;
-    connection.query("SELECT * FROM canciones WHERE album = ?", [id_album], (err, rows) => {
+    connection.query("SELECT canciones.id, canciones.nombre, artista.nombre AS nombre_artista, albumes.nombre AS nombre_album, canciones.duracion, canciones.reproducciones FROM canciones INNER JOIN albumes ON albumes.id = canciones.album INNER JOIN artistas ON artistas.id = albumes.artista WHERE albumes.id = ?", [id_album], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
