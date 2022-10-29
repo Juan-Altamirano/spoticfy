@@ -132,7 +132,7 @@ const deleteArtista = (req, res) => {
 
 const getAlbumesByArtista = (req, res) => {
     const id_artista = req.params.id;
-    connection.query("SELECT * FROM albumes WHERE artista = ?", [id_artista], (err, rows) => {
+    connection.query("SELECT albumes.id, albumes.nombre, artistas.nombre AS nombre_artista FROM albumes INNER JOIN artistas ON artistas.id = albumes.id WHERE artista.id = ?", [id_artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
