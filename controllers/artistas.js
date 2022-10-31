@@ -37,7 +37,6 @@ const getArtista = (req, res) => {
         }
         return res.json(rows);
     });
-    
 
     // Completar con la consulta que devuelve un artista
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
@@ -132,7 +131,7 @@ const deleteArtista = (req, res) => {
 
 const getAlbumesByArtista = (req, res) => {
     const id_artista = req.params.id;
-    connection.query("SELECT albumes.id, albumes.nombre, artistas.nombre AS nombre_artista FROM albumes INNER JOIN artistas ON artistas.id = albumes.id WHERE artista.id = ?", [id_artista], (err, rows) => {
+    connection.query("SELECT albumes.id, albumes.nombre, artistas.nombre AS nombre_artista FROM albumes INNER JOIN artistas ON artistas.id = albumes.artista WHERE artistas.id = ?", [id_artista], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
@@ -145,15 +144,10 @@ const getAlbumesByArtista = (req, res) => {
     // Deberían devolver los datos de la misma forma que getAlbumes
 };
 
-// Seleccionas tanto el nombre de las canciones, como el id del artista de la tabla canciones. 
-// Como recibimos como parametro el id del artista (ubicado en la tabla de artista) y necesitamos seleccionar el nombre de las canciones de dichos artistas, necesitaremos JOINS, para poder juntar toda la informacion en una tabla temporal.
-//
-
 const getCancionesByArtista = (req, res) => {
 
-    let id = req.params.id;
-    connection.query("SELECT canciones.id, canciones.nombre, artista.nombre AS nombre_artista, albumes.nombre AS nombre_album, canciones.duracion, canciones.reproducciones FROM canciones INNER JOIN albumes ON albumes.id = canciones.album INNER JOIN artistas ON artistas.id = albumes.artista WHERE artista.id = ?", [id], (err, rows) => {
-    // connection.query("Select canciones.nombre WHERE canciones.album = albumes.artista AND albumes.artista = ?", [id], (err, rows) => {
+    const id = req.params.id;
+    connection.query("SELECT canciones.id, canciones.nombre, artistas.nombre AS nombre_artista, albumes.nombre AS nombre_album, canciones.duracion, canciones.reproducciones FROM canciones INNER JOIN albumes ON canciones.album = albumes.id INNER JOIN artistas ON albumes.artista = artistas.id WHERE artistas.id = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);

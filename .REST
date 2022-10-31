@@ -12,21 +12,21 @@ POST http://localhost:3000/artistas HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "new"
+  "nombre": "Mister A."
 }
 
 ### Actualizar un artista
 
-PUT http://localhost:3000/artistas/9 HTTP/1.1
+PUT http://localhost:3000/artistas/11 HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Artista y"
+  "nombre": "Artista B"
 }
 
 ### Eliminar un artista
 
-DELETE http://localhost:3000/artistas/8 HTTP/1.1
+DELETE http://localhost:3000/artistas/11 HTTP/1.1
 
 ### Obtener albumes
 
@@ -42,23 +42,23 @@ POST http://localhost:3000/albumes HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "ney",
-  "artista": 4
+  "nombre": "mes",
+  "artista": 5
 }
 
 ### Actualizar un album
 
-PUT http://localhost:3000/albumes/9 HTTP/1.1
+PUT http://localhost:3000/albumes/10 HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Loco",
-  "artista": 1
+  "nombre": "ZX",
+  "artista": 2
 }
 
 ### Eliminar un album
 
-DELETE http://localhost:3000/albumes/13 HTTP/1.1
+DELETE http://localhost:3000/albumes/10 HTTP/1.1
 
 ### Obtener canciones
 
@@ -74,25 +74,25 @@ POST http://localhost:3000/canciones HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "arg",
-  "album": 5,
-  "duracion": 400
+  "nombre": "brz",
+  "album": 3,
+  "duracion": 800
 }
 
 ### Actualizar una cancion
 
-PUT http://localhost:3000/canciones/13 HTTP/1.1
+PUT http://localhost:3000/canciones/11 HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "diego",
-  "album": 5,
-  "duracion": 160
+  "nombre": "pedro",
+  "album": 2,
+  "duracion": 360
 }
 
 ### Eliminar una cancion
 
-DELETE http://localhost:3000/canciones/13 HTTP/1.1
+DELETE http://localhost:3000/canciones/11 HTTP/1.1
 
 ### Reproducir una cancion
 
