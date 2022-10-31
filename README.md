@@ -8,4 +8,4 @@
 
 ## Aclaraciones
 
-Todos las queries las cuales tienen despues un SELECT * FROM es para checkear el funcionamiento.
+Todos las queries las cuales tienen despues un SELECT * FROM es para checkear el funcionamiento con las consola.
