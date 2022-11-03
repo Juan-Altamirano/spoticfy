@@ -36,7 +36,7 @@ const getAlbum = (req, res) => {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        return res.json(rows);
+        return res.json(rows[0]);
     });
 
     // Completar con la consulta que devuelve un album por id
