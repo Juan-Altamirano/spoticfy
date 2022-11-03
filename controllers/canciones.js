@@ -69,7 +69,7 @@ const createCancion = (req, res) => {
     const album = req.body.album;
     const duracion = req.body.duracion;
 
-    connection.query("INSERT INTO canciones (nombre, album, duracion) VALUES (?, ?, ?)", [nombre, album, duracion], (err, rows) => {
+    connection.query("INSERT INTO canciones (nombre, album, duracion, reproducciones) VALUES (?, ?, ?, 0)", [nombre, album, duracion], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);

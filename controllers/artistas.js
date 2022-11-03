@@ -6,9 +6,9 @@ const getArtistas = (req, res) => {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        return res.json(rows);
+        return res.json(rows[0]);
     });
-    
+
     // Completar con la consulta que devuelve todos los artistas
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
     // Deberían devolver los datos de la siguiente forma:
@@ -28,14 +28,14 @@ const getArtistas = (req, res) => {
 };
 
 const getArtista = (req, res) => {
-    
+
     const id = req.params.id;
     connection.query("SELECT * FROM artistas WHERE id = ?", [id], (err, rows) => {
         if (err) {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        return res.json(rows);
+        return res.json(rows[0]);
     });
 
     // Completar con la consulta que devuelve un artista
@@ -56,7 +56,7 @@ const createArtista = (req, res) => {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        return res.json(`Artista <${nombre}> creado correctamente`);        
+        return res.json(`Artista <${nombre}> creado correctamente`);
     });
 
     connection.query("SELECT * FROM artistas", (err, rows) => {
@@ -93,7 +93,7 @@ const updateArtista = (req, res) => {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        console.log(rows)
+        console.log(rows[0])
     });
 
 
@@ -114,7 +114,7 @@ const deleteArtista = (req, res) => {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        return res.json(`Artista <${id}> borrado correctamente`);        
+        return res.json(`Artista <${id}> borrado correctamente`);
     });
 
     connection.query("SELECT * FROM artistas", (err, rows) => {
@@ -122,7 +122,7 @@ const deleteArtista = (req, res) => {
             console.error("Error consultando: " + err);
             return res.sendStatus(500);
         }
-        console.log(rows)
+        console.log(rows[0])
     });
 
     // Completar con la consulta que elimina un artista
@@ -148,16 +148,16 @@ const getCancionesByArtista = (req, res) => {
 
     const id = req.params.id;
     connection.query("SELECT canciones.id, canciones.nombre, artistas.nombre AS nombre_artista, albumes.nombre AS nombre_album, canciones.duracion, canciones.reproducciones FROM canciones INNER JOIN albumes ON canciones.album = albumes.id INNER JOIN artistas ON albumes.artista = artistas.id WHERE artistas.id = ?", [id], (err, rows) => {
-        if (err) {
-            console.error("Error consultando: " + err);
-            return res.sendStatus(500);
-        }
-        return res.json(rows);
-    })
-    // Completar con la consulta que devuelve las canciones de un artista
-    // (tener en cuenta que las canciones están asociadas a un álbum, y los álbumes a un artista)
-    // Recordar que los parámetros de una consulta GET se encuentran en req.params
-    // Deberían devolver los datos de la misma forma que getCanciones
+            if (err) {
+                console.error("Error consultando: " + err);
+                return res.sendStatus(500);
+            }
+            return res.json(rows[0]);
+        })
+        // Completar con la consulta que devuelve las canciones de un artista
+        // (tener en cuenta que las canciones están asociadas a un álbum, y los álbumes a un artista)
+        // Recordar que los parámetros de una consulta GET se encuentran en req.params
+        // Deberían devolver los datos de la misma forma que getCanciones
 };
 
 module.exports = {
